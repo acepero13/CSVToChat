@@ -111,8 +111,8 @@ public class ChatController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 moveNext();
-                setCurrentConversation();
-                conversations.keySet();
+//                setCurrentConversation();
+//                conversations.keySet();
             }
         });
 
