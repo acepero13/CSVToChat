@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telecomchat.ChatController">
+    <stylesheets>
+        <URL value="@chat.css" />
+    </stylesheets>
+   <children>
+      <ScrollPane fx:id="screolPane" fitToWidth="true" layoutX="2.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+      <Button fx:id="previousButton" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" text="&lt;" textAlignment="CENTER" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="nextButton" layoutX="534.0" layoutY="359.0" mnemonicParsing="false" text="&gt;" AnchorPane.bottomAnchor="6.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="sessionList" layoutX="77.0" layoutY="359.0" prefHeight="27.0" prefWidth="638.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
+      <Label fx:id="sessionName" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="284.0" text="sessionuuid" textFill="#a84717" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="8.0" />
+      <Button fx:id="openFileButton" layoutX="517.0" layoutY="18.0" mnemonicParsing="false" text="OpenFile" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0" />
+   </children>
+</AnchorPane>
