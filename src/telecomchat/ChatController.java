@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 
 /**
@@ -54,10 +56,6 @@ public class ChatController implements Initializable {
 
     private TelecomChat telecomChat;
 
-    private List<String> list = new ArrayList<String>();
-
-    private HashMap<Integer, String> sessionListCopy = new HashMap<Integer, String>();
-
     private ObservableList<String> sessionobservableList;
 
     private CSVReader csvReader;
@@ -65,10 +63,6 @@ public class ChatController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        list.add("String one");
-        list.add("String two");
-        list.add("String three");
 
         // TODO
         sessionList.setOnAction((event) -> {
@@ -119,7 +113,7 @@ public class ChatController implements Initializable {
         });
 
         showChatOverview();
-        fillCombobox(list);
+//        fillCombobox(list);
     }
 
     private void movePrevious() {
@@ -164,7 +158,7 @@ public class ChatController implements Initializable {
         File file = fileChooser.showOpenDialog(telecomChat.getPrimaryStage());
         if (file != null) {
             String filename = file.getAbsolutePath();
-            csvReader = new CSVReader(filename, ',');
+            csvReader = new CSVReader(filename, ';');
             csvReader.readFile();
             conversations = csvReader.parse();
             fillCombobox(conversations.keySet());
@@ -178,7 +172,6 @@ public class ChatController implements Initializable {
     public void fillCombobox(Collection<String> s) {
         sessionobservableList = FXCollections.observableArrayList(s);
 
-        int count = 0;
         sessionList.getItems().clear();
         sessionList.getItems().addAll(sessionobservableList);
 
@@ -200,8 +193,11 @@ public class ChatController implements Initializable {
 
     private void addUserDialog(int i, String dialog, ConversationLine line) {
         if (!dialog.equals("")) {
-            dialog = dialog + "  " + line.getTimestamp().toString();
+            dialog = dialog + "\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
+//            chatMessage.setTextAlignment(TextAlignment.RIGHT);
+            chatMessage.setAlignment(Pos.TOP_LEFT);
+            
             chatMessage.setWrapText(true);
             chatMessage.setPrefWidth(600);
 
@@ -221,8 +217,10 @@ public class ChatController implements Initializable {
 
     private void addSystemDialog(int i, String dialog, ConversationLine line) {
         if (!dialog.equals("")) {
-            dialog = dialog + "  " + line.getTimestamp().toString();
+            dialog = dialog + "\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
+//            chatMessage.setTextAlignment(TextAlignment.RIGHT);
+chatMessage.setAlignment(Pos.TOP_LEFT);
             chatMessage.setWrapText(true);
             chatMessage.setPrefWidth(600);
             GridPane.setHalignment(chatMessage, HPos.RIGHT);
