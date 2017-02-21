@@ -217,10 +217,9 @@ public class ChatController implements Initializable {
 
     private void addSystemDialog(int i, String dialog, ConversationLine line) {
         if (!dialog.equals("")) {
-            dialog = dialog + "\n\n" + line.getTimestamp().toString();
+            dialog = dialog + "*\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
-//            chatMessage.setTextAlignment(TextAlignment.RIGHT);
-chatMessage.setAlignment(Pos.TOP_LEFT);
+            chatMessage.setAlignment(Pos.TOP_LEFT);
             chatMessage.setWrapText(true);
             chatMessage.setPrefWidth(600);
             GridPane.setHalignment(chatMessage, HPos.RIGHT);

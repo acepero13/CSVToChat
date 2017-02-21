@@ -38,7 +38,11 @@ public class Emotion implements MetaDataObject {
     private Image getImage() {
         Image image = null;
         if(data.equalsIgnoreCase("smiling")){
-            image = new Image(getClass().getClassLoader().getResource("emojis/smile.png").toExternalForm());
+            label.setText(label.getText().replace("*", "   :)"));
+        }
+        else
+        {
+            label.setText(label.getText().replace("*", " "));
         }
         return image;
     }
