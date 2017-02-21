@@ -60,7 +60,6 @@ public class ChatController implements Initializable {
 
     private ObservableList<String> sessionobservableList;
 
-
     private CSVReader csvReader;
     private HashMap<String, Conversation> conversations;
 
@@ -80,19 +79,17 @@ public class ChatController implements Initializable {
                 sessionName.setText(s);
                 chatGridPane.getChildren().clear();
                 String sessionId = sessionList.getSelectionModel().getSelectedItem();
-                if(!sessionId.equals("")){
+                if (!sessionId.equals("")) {
                     Conversation conversation = conversations.get(sessionId);
                     int i = 0;
-                    for(Object objectLine: conversation.getMessages()){
+                    for (Object objectLine : conversation.getMessages()) {
                         ConversationLine line = (ConversationLine) objectLine;
                         addUserDialog(i, line.getUserQuestion(), line);
-                        addSystemDialog(i+1, line.getSystemResponse(), line);
+                        addSystemDialog(i + 1, line.getSystemResponse(), line);
                         i++;
                     }
 
-
                 }
-
 
             }
         });
@@ -126,20 +123,20 @@ public class ChatController implements Initializable {
     }
 
     private void movePrevious() {
-        if(current_position > 0){
-            current_position-=1;
+        if (current_position > 0) {
+            current_position -= 1;
             sessionList.getSelectionModel().select(current_position);
-        }else{
+        } else {
             previousButton.setDisable(true);
         }
     }
 
     private void setCurrentPosition() {
         current_position = sessionList.getSelectionModel().getSelectedIndex();
-        if(nextButton.isDisable() && current_position < sessionobservableList.size()){
+        if (nextButton.isDisable() && current_position < sessionobservableList.size()) {
             nextButton.setDisable(false);
         }
-        if(previousButton.isDisable() && current_position > 0){
+        if (previousButton.isDisable() && current_position > 0) {
             previousButton.setDisable(false);
         }
     }
@@ -148,10 +145,10 @@ public class ChatController implements Initializable {
     }
 
     private void moveNext() {
-        if(current_position < sessionobservableList.size()){
-            current_position+=1;
+        if (current_position < sessionobservableList.size()) {
+            current_position += 1;
             sessionList.getSelectionModel().select(current_position);
-        }else{
+        } else {
             nextButton.setDisable(true);
         }
     }
@@ -165,12 +162,13 @@ public class ChatController implements Initializable {
 
         // Show open file dialog
         File file = fileChooser.showOpenDialog(telecomChat.getPrimaryStage());
-        String filename = file.getAbsolutePath();
-        csvReader = new CSVReader(filename, ';');
-        csvReader.readFile();
-        conversations = csvReader.parse();
-        fillCombobox(conversations.keySet());
-
+        if (file != null) {
+            String filename = file.getAbsolutePath();
+            csvReader = new CSVReader(filename, ',');
+            csvReader.readFile();
+            conversations = csvReader.parse();
+            fillCombobox(conversations.keySet());
+        }
     }
 
     public void setMainApp(TelecomChat telecomChat) {
@@ -184,10 +182,8 @@ public class ChatController implements Initializable {
         sessionList.getItems().clear();
         sessionList.getItems().addAll(sessionobservableList);
 
-
         sessionList.setValue(sessionobservableList.get(0));
         sessionName.setText(sessionobservableList.get(0));
-
 
     }
 
@@ -202,10 +198,9 @@ public class ChatController implements Initializable {
         screolPane.setContent(chatGridPane);
     }
 
-
-
     private void addUserDialog(int i, String dialog, ConversationLine line) {
-        if(!dialog.equals("")) {
+        if (!dialog.equals("")) {
+            dialog = dialog + "  " + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
             chatMessage.setWrapText(true);
             chatMessage.setPrefWidth(600);
@@ -225,7 +220,8 @@ public class ChatController implements Initializable {
     }
 
     private void addSystemDialog(int i, String dialog, ConversationLine line) {
-        if(!dialog.equals("")) {
+        if (!dialog.equals("")) {
+            dialog = dialog + "  " + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
             chatMessage.setWrapText(true);
             chatMessage.setPrefWidth(600);
@@ -235,6 +231,5 @@ public class ChatController implements Initializable {
             chatGridPane.addRow(i, chatMessage);
         }
     }
-
 
 }
