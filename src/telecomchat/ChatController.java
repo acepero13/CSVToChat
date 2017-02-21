@@ -120,6 +120,8 @@ public class ChatController implements Initializable {
         if (current_position > 0) {
             current_position -= 1;
             sessionList.getSelectionModel().select(current_position);
+            if(current_position == 0)
+                previousButton.setDisable(true);
         } else {
             previousButton.setDisable(true);
         }
@@ -127,7 +129,7 @@ public class ChatController implements Initializable {
 
     private void setCurrentPosition() {
         current_position = sessionList.getSelectionModel().getSelectedIndex();
-        if (nextButton.isDisable() && current_position < sessionobservableList.size()) {
+        if (nextButton.isDisable() && current_position < sessionobservableList.size()-1) {
             nextButton.setDisable(false);
         }
         if (previousButton.isDisable() && current_position > 0) {
@@ -139,9 +141,11 @@ public class ChatController implements Initializable {
     }
 
     private void moveNext() {
-        if (current_position < sessionobservableList.size()) {
+        if (current_position < sessionobservableList.size()-1) {
             current_position += 1;
             sessionList.getSelectionModel().select(current_position);
+            if(current_position == sessionobservableList.size()-1)
+                nextButton.setDisable(true);
         } else {
             nextButton.setDisable(true);
         }
