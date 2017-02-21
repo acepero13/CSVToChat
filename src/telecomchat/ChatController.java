@@ -203,7 +203,7 @@ public class ChatController implements Initializable {
             chatMessage.setAlignment(Pos.TOP_LEFT);
             
             chatMessage.setWrapText(true);
-            chatMessage.setPrefWidth(600);
+            chatMessage.setPrefWidth(800);
 
             GridPane.setHalignment(chatMessage, HPos.LEFT);
             chatMessage.getStyleClass().add("message-bubble-left");
