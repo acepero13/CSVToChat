@@ -166,7 +166,7 @@ public class ChatController implements Initializable {
         File file = fileChooser.showOpenDialog(telecomChat.getPrimaryStage());
         if (file != null) {
             String filename = file.getAbsolutePath();
-            csvReader = new CSVReader(filename, ',');
+            csvReader = new CSVReader(filename, ';');
             csvReader.readFile();
             conversations = csvReader.parse();
             fillCombobox(conversations.keySet());
@@ -201,7 +201,7 @@ public class ChatController implements Initializable {
         if (!dialog.equals("")) {
             dialog = dialog + "\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
-            chatMessage.setAlignment(Pos.TOP_LEFT);
+            chatMessage.setAlignment(Pos.BASELINE_LEFT);
             
             chatMessage.setWrapText(true);
             chatMessage.setPrefWidth(800);
