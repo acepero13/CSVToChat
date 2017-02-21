@@ -82,14 +82,15 @@ public class ChatController implements Initializable {
                 String sessionId = sessionList.getSelectionModel().getSelectedItem();
                 if(!sessionId.equals("")){
                     Conversation conversation = conversations.get(sessionId);
-                    for(int i=0; i< conversation.getMessages().size(); i++){
-                        for(Object objectLine: conversation.getMessages()){
-                            ConversationLine line = (ConversationLine) objectLine;
-                            addDialog(i, line.getUserQuestion(), line);
-                            addDialog(i+1, line.getSystemResponse(), line);
-                        }
-
+                    int i = 0;
+                    for(Object objectLine: conversation.getMessages()){
+                        ConversationLine line = (ConversationLine) objectLine;
+                        addDialog(i, line.getUserQuestion(), line);
+                        addDialog(i+1, line.getSystemResponse(), line);
+                        i++;
                     }
+
+
                 }
 
 
@@ -165,7 +166,7 @@ public class ChatController implements Initializable {
         // Show open file dialog
         File file = fileChooser.showOpenDialog(telecomChat.getPrimaryStage());
         String filename = file.getAbsolutePath();
-        csvReader = new CSVReader(filename, ',');
+        csvReader = new CSVReader(filename, ';');
         csvReader.readFile();
         conversations = csvReader.parse();
         fillCombobox(conversations.keySet());
@@ -188,10 +189,6 @@ public class ChatController implements Initializable {
         sessionName.setText(sessionobservableList.get(0));
 
 
-
-        for (int i = 0; i < 20; i++) {
-            //addDialog(i, test);
-        }
     }
 
     private void showChatOverview() {
@@ -207,26 +204,28 @@ public class ChatController implements Initializable {
 
     private void addDialog(int i, String dialog, ConversationLine line) {
 
-        Label chatMessage = new Label(dialog + i);
-        chatMessage.setWrapText(true);
+        if(!dialog.equals("")) {
+            Label chatMessage = new Label(dialog);
+            chatMessage.setWrapText(true);
 //        chatMessage.setPrefWidth(anchorPane.getWidth() * 0.8);
-        chatMessage.setPrefWidth(600);
+            chatMessage.setPrefWidth(600);
 
-        GridPane.setHalignment(chatMessage, i % 2 == 0 ? HPos.LEFT
-                : HPos.RIGHT);
+            GridPane.setHalignment(chatMessage, i % 2 == 0 ? HPos.LEFT
+                    : HPos.RIGHT);
 
-        if (i % 2 == 0) {
-            chatMessage.getStyleClass().add("message-bubble-left");
-        } else {
-            chatMessage.getStyleClass().add("message-bubble-right");
+            if (i % 2 == 0) {
+                chatMessage.getStyleClass().add("message-bubble-left");
+            } else {
+                chatMessage.getStyleClass().add("message-bubble-right");
+            }
+
+            LinkedList<MetaDataObject> metadataObjects = line.getMetadataObjects();
+            for (MetaDataObject object : metadataObjects) {
+                object.render(chatMessage);
+            }
+
+            chatGridPane.addRow(i, chatMessage);
         }
-
-        LinkedList<MetaDataObject> metadataObjects = line.getMetadataObjects();
-        for(MetaDataObject object : metadataObjects) {
-            object.render(chatMessage);
-        }
-
-        chatGridPane.addRow(i, chatMessage);
     }
 
 }
