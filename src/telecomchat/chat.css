@@ -1,11 +1,11 @@
 .message-bubble-left {
     -fx-shape: "M 617.796387,96.331444c0,-10.000282 -13.401611,-18.051064 -30.04834,-18.051064l-471.95871,0c-16.64682,0 -30.048409,8.050781 -30.048409,18.051064l0,27.354454l-73.861718,48.273758l73.861718,-11.754837l0,54.639435c0,10.00029 13.401588,18.051056 30.048409,18.051056l471.95871,0c16.646729,0 30.04834,-8.050766 30.04834,-18.051056l0,-118.51281 Z ";
     -fx-font: 16px "Comic Sans MS";
-    -fx-background-color: rgb(220, 248, 198);
+    -fx-background-color: rgb(59, 89, 152);
     -fx-text-alignment: left;
     -fx-background-insets: 0,3;
     -fx-padding: 10 20 10 120;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .message-bubble-right {
