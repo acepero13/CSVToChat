@@ -25,9 +25,9 @@ public class Emotion implements MetaDataObject {
     private void setEmoji(Label object) {
         label = object;
         Image image = getImage();
-        if(image != null){
+        /*if(image != null){
             setLabelEmoji(image);
-        }
+        }*/
     }
 
     private void setLabelEmoji(Image image) {
@@ -38,12 +38,10 @@ public class Emotion implements MetaDataObject {
     private Image getImage() {
         Image image = null;
         if(data.equalsIgnoreCase("smiling")){
-            label.setText(label.getText().replace("*", "   :)"));
+            String text = label.getText() + "   :)";
+            label.setText(text);
         }
-        else
-        {
-            label.setText(label.getText().replace("*", " "));
-        }
+
         return image;
     }
 }

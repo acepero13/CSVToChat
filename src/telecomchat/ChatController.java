@@ -79,8 +79,11 @@ public class ChatController implements Initializable {
                     for (Object objectLine : conversation.getMessages()) {
                         ConversationLine line = (ConversationLine) objectLine;
                         addUserDialog(i, line.getUserQuestion(), line);
-                        addSystemDialog(i + 1, line.getSystemResponse(), line);
-                        i++;
+                        if(!line.getUserQuestion().equals(""))
+                            i++;
+                        addSystemDialog(i , line.getSystemResponse(), line);
+                        if(!line.getSystemResponse().equals(""))
+                            i++;
                     }
 
                 }
@@ -221,7 +224,7 @@ public class ChatController implements Initializable {
 
     private void addSystemDialog(int i, String dialog, ConversationLine line) {
         if (!dialog.equals("")) {
-            dialog = dialog + "*\n\n" + line.getTimestamp().toString();
+           // dialog = dialog + "\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
             chatMessage.setAlignment(Pos.TOP_LEFT);
             chatMessage.setWrapText(true);
@@ -229,6 +232,8 @@ public class ChatController implements Initializable {
             GridPane.setHalignment(chatMessage, HPos.RIGHT);
             chatMessage.getStyleClass().add("message-bubble-right");
             renderMetadata(line, chatMessage);
+            String text = chatMessage.getText() + "\n\n" + line.getTimestamp().toString();
+            chatMessage.setText(text);
             chatGridPane.addRow(i, chatMessage);
         }
     }

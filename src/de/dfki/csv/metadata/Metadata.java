@@ -19,7 +19,7 @@ public class Metadata {
 
     public Metadata(String value){
         data = value;
-        parse();
+
     }
 
     public LinkedList<MetaDataObject> parse(){
