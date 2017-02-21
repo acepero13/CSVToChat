@@ -36,7 +36,7 @@ public class ConversationLine implements Comparable {
     }
 
     public void setUserQuestion(String userQuestion) {
-        this.userQuestion = userQuestion;
+        this.userQuestion = userQuestion.trim();
     }
 
     public String getSystemResponse() {
@@ -44,7 +44,7 @@ public class ConversationLine implements Comparable {
     }
 
     public void setSystemResponse(String systemResponse) {
-        this.systemResponse = systemResponse;
+        this.systemResponse = systemResponse.trim();
     }
 
     public Timestamp getTimestamp() {
