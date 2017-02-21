@@ -85,8 +85,8 @@ public class ChatController implements Initializable {
                     int i = 0;
                     for(Object objectLine: conversation.getMessages()){
                         ConversationLine line = (ConversationLine) objectLine;
-                        addDialog(i, line.getUserQuestion(), line);
-                        addDialog(i+1, line.getSystemResponse(), line);
+                        addUserDialog(i, line.getUserQuestion(), line);
+                        addSystemDialog(i+1, line.getSystemResponse(), line);
                         i++;
                     }
 
@@ -202,30 +202,39 @@ public class ChatController implements Initializable {
         screolPane.setContent(chatGridPane);
     }
 
-    private void addDialog(int i, String dialog, ConversationLine line) {
 
+
+    private void addUserDialog(int i, String dialog, ConversationLine line) {
         if(!dialog.equals("")) {
             Label chatMessage = new Label(dialog);
             chatMessage.setWrapText(true);
-//        chatMessage.setPrefWidth(anchorPane.getWidth() * 0.8);
             chatMessage.setPrefWidth(600);
 
-            GridPane.setHalignment(chatMessage, i % 2 == 0 ? HPos.LEFT
-                    : HPos.RIGHT);
-
-            if (i % 2 == 0) {
-                chatMessage.getStyleClass().add("message-bubble-left");
-            } else {
-                chatMessage.getStyleClass().add("message-bubble-right");
-            }
-
-            LinkedList<MetaDataObject> metadataObjects = line.getMetadataObjects();
-            for (MetaDataObject object : metadataObjects) {
-                object.render(chatMessage);
-            }
+            GridPane.setHalignment(chatMessage, HPos.LEFT);
+            chatMessage.getStyleClass().add("message-bubble-left");
 
             chatGridPane.addRow(i, chatMessage);
         }
     }
+
+    private void renderMetadata(ConversationLine line, Label chatMessage) {
+        LinkedList<MetaDataObject> metadataObjects = line.getMetadataObjects();
+        for (MetaDataObject object : metadataObjects) {
+            object.render(chatMessage);
+        }
+    }
+
+    private void addSystemDialog(int i, String dialog, ConversationLine line) {
+        if(!dialog.equals("")) {
+            Label chatMessage = new Label(dialog);
+            chatMessage.setWrapText(true);
+            chatMessage.setPrefWidth(600);
+            GridPane.setHalignment(chatMessage, HPos.RIGHT);
+            chatMessage.getStyleClass().add("message-bubble-right");
+            renderMetadata(line, chatMessage);
+            chatGridPane.addRow(i, chatMessage);
+        }
+    }
+
 
 }
