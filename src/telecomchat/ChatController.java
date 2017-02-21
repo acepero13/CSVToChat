@@ -166,7 +166,7 @@ public class ChatController implements Initializable {
         File file = fileChooser.showOpenDialog(telecomChat.getPrimaryStage());
         if (file != null) {
             String filename = file.getAbsolutePath();
-            csvReader = new CSVReader(filename, ',');
+            csvReader = new CSVReader(filename, ';');
             csvReader.readFile();
             conversations = csvReader.parse();
             fillCombobox(conversations.keySet());
