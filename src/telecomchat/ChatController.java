@@ -73,21 +73,27 @@ public class ChatController implements Initializable {
                 setCurrentPosition();
                 chatGridPane.getChildren().clear();
                 String sessionId = sessionList.getSelectionModel().getSelectedItem();
+                String[] sessionId1 = sessionId.substring(0, sessionId.length() - 1).split("\\s++");
+                String sessionId0 = sessionId1[0];
                 if (!sessionId.equals("")) {
-                    Conversation conversation = conversations.get(sessionId);
+                    Conversation conversation = conversations.get(sessionId0);
                     int i = 0;
                     for (Object objectLine : conversation.getMessages()) {
                         ConversationLine line = (ConversationLine) objectLine;
                         addUserDialog(i, line.getUserQuestion(), line);
-                        if(!line.getUserQuestion().equals(""))
+                        if (!line.getUserQuestion().equals("")) {
                             i++;
-                        addSystemDialog(i , line.getSystemResponse(), line);
-                        if(!line.getSystemResponse().equals(""))
+                        }
+                        addSystemDialog(i, line.getSystemResponse(), line);
+                        if (!line.getSystemResponse().equals("")) {
                             i++;
+                        }
                     }
-                    
-                    int countMessage = conversation.getMessages().size();
-                    sessionName.setText(s + "      " + countMessage + " Message(s)");
+//
+//                    int countMessage = conversation.getMessages().size();
+//                    sessionName.setText(s + "      " + countMessage + " Message(s)");
+
+                    sessionName.setText(s);
                 }
 
             }
@@ -124,8 +130,9 @@ public class ChatController implements Initializable {
         if (current_position > 0) {
             current_position -= 1;
             sessionList.getSelectionModel().select(current_position);
-            if(current_position == 0)
+            if (current_position == 0) {
                 previousButton.setDisable(true);
+            }
         } else {
             previousButton.setDisable(true);
         }
@@ -133,7 +140,7 @@ public class ChatController implements Initializable {
 
     private void setCurrentPosition() {
         current_position = sessionList.getSelectionModel().getSelectedIndex();
-        if (nextButton.isDisable() && current_position < sessionobservableList.size()-1) {
+        if (nextButton.isDisable() && current_position < sessionobservableList.size() - 1) {
             nextButton.setDisable(false);
         }
         if (previousButton.isDisable() && current_position > 0) {
@@ -145,11 +152,12 @@ public class ChatController implements Initializable {
     }
 
     private void moveNext() {
-        if (current_position < sessionobservableList.size()-1) {
+        if (current_position < sessionobservableList.size() - 1) {
             current_position += 1;
             sessionList.getSelectionModel().select(current_position);
-            if(current_position == sessionobservableList.size()-1)
+            if (current_position == sessionobservableList.size() - 1) {
                 nextButton.setDisable(true);
+            }
         } else {
             nextButton.setDisable(true);
         }
@@ -166,10 +174,11 @@ public class ChatController implements Initializable {
         File file = fileChooser.showOpenDialog(telecomChat.getPrimaryStage());
         if (file != null) {
             String filename = file.getAbsolutePath();
-            csvReader = new CSVReader(filename, ';');
+            csvReader = new CSVReader(filename, ',');
             csvReader.readFile();
             conversations = csvReader.parse();
-            fillCombobox(conversations.keySet());
+//            fillCombobox(conversations.keySet());
+            fillCombobox(conversations);
         }
     }
 
@@ -177,8 +186,14 @@ public class ChatController implements Initializable {
         this.telecomChat = telecomChat;
     }
 
-    public void fillCombobox(Collection<String> s) {
-        sessionobservableList = FXCollections.observableArrayList(s);
+//    public void fillCombobox(Collection<String> s) {
+    public void fillCombobox(HashMap<String, Conversation> conversations) {
+        List sessionaryLst = new ArrayList();
+        for (String sessionId : conversations.keySet()) {
+            int number = conversations.get(sessionId).getMessages().size();
+            sessionaryLst.add(sessionId + "  " + "( " + number + " Message(s) " + ")");
+        }
+        sessionobservableList = FXCollections.observableArrayList(sessionaryLst);
 
         sessionList.getItems().clear();
         sessionList.getItems().addAll(sessionobservableList);
@@ -201,13 +216,13 @@ public class ChatController implements Initializable {
         if (!dialog.equals("")) {
             dialog = dialog + "\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
-            chatMessage.setAlignment(Pos.BASELINE_LEFT);
-            
+            chatMessage.setAlignment(Pos.TOP_LEFT);
+
             chatMessage.setWrapText(true);
             chatMessage.setPrefWidth(800);
 
             GridPane.setHalignment(chatMessage, HPos.LEFT);
-            
+
             chatMessage.getStyleClass().add("message-bubble-left");
 //            chatMessage.setPadding(new Insets(0, 0, 0, 40));
 
@@ -224,7 +239,7 @@ public class ChatController implements Initializable {
 
     private void addSystemDialog(int i, String dialog, ConversationLine line) {
         if (!dialog.equals("")) {
-           // dialog = dialog + "\n\n" + line.getTimestamp().toString();
+            // dialog = dialog + "\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
             chatMessage.setAlignment(Pos.TOP_LEFT);
             chatMessage.setWrapText(true);
