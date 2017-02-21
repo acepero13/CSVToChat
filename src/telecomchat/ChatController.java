@@ -70,7 +70,6 @@ public class ChatController implements Initializable {
             if (s != null) {
                 // set the setValue of combobox
                 setCurrentPosition();
-                sessionName.setText(s);
                 chatGridPane.getChildren().clear();
                 String sessionId = sessionList.getSelectionModel().getSelectedItem();
                 if (!sessionId.equals("")) {
@@ -85,7 +84,9 @@ public class ChatController implements Initializable {
                         if(!line.getSystemResponse().equals(""))
                             i++;
                     }
-
+                    
+                    int countMessage = conversation.getMessages().size();
+                    sessionName.setText(s + "      " + countMessage + " Message(s)");
                 }
 
             }
@@ -116,7 +117,6 @@ public class ChatController implements Initializable {
         });
 
         showChatOverview();
-//        fillCombobox(list);
     }
 
     private void movePrevious() {
@@ -183,8 +183,6 @@ public class ChatController implements Initializable {
         sessionList.getItems().addAll(sessionobservableList);
 
         sessionList.setValue(sessionobservableList.get(0));
-        sessionName.setText(sessionobservableList.get(0));
-
     }
 
     private void showChatOverview() {
@@ -202,7 +200,6 @@ public class ChatController implements Initializable {
         if (!dialog.equals("")) {
             dialog = dialog + "\n\n" + line.getTimestamp().toString();
             Label chatMessage = new Label(dialog);
-//            chatMessage.setTextAlignment(TextAlignment.RIGHT);
             chatMessage.setAlignment(Pos.TOP_LEFT);
             
             chatMessage.setWrapText(true);
