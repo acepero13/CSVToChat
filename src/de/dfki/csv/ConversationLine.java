@@ -16,6 +16,7 @@ public class ConversationLine implements Comparable {
     private Timestamp timestamp;
     private Date date;
     private String emotion;
+    private String interactiontype;
     private LinkedList<MetaDataObject> metadataObjects;
 
     public ConversationLine(){
@@ -69,6 +70,16 @@ public class ConversationLine implements Comparable {
     public void setEmotion(String emotion) {
         this.emotion = emotion;
     }
+
+    public String getInteractiontype() {
+        return interactiontype;
+    }
+
+    public void setInteractiontype(String interactiontype) {
+        this.interactiontype = interactiontype;
+    }
+    
+    
 
 
     @Override

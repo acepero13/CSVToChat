@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -165,7 +166,7 @@ public class ChatController implements Initializable {
         File file = fileChooser.showOpenDialog(telecomChat.getPrimaryStage());
         if (file != null) {
             String filename = file.getAbsolutePath();
-            csvReader = new CSVReader(filename, ';');
+            csvReader = new CSVReader(filename, ',');
             csvReader.readFile();
             conversations = csvReader.parse();
             fillCombobox(conversations.keySet());
@@ -206,7 +207,9 @@ public class ChatController implements Initializable {
             chatMessage.setPrefWidth(800);
 
             GridPane.setHalignment(chatMessage, HPos.LEFT);
+            
             chatMessage.getStyleClass().add("message-bubble-left");
+//            chatMessage.setPadding(new Insets(0, 0, 0, 40));
 
             chatGridPane.addRow(i, chatMessage);
         }

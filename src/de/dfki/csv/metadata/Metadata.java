@@ -40,6 +40,7 @@ public class Metadata {
     private void createMetaObjects() {
         for(int i = 0; i < parsedData.size(); i++){
             JSONObject object = (JSONObject) parsedData.get(i);
+            
             String key = (String) object.get("key");
             String value = (String) object.get("value");
             MetaDataObject obj = makeObject(key, value);

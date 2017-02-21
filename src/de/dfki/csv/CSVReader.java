@@ -105,15 +105,18 @@ public class CSVReader {
             timestamputc = record.get("timestamputc");
             String interactionvalue = record.get("interactionvalue");
             String outputtext = record.get("outputtext");
+            String interactionstype = record.get("interactiontype");
             String safeOutputText = Jsoup.clean(outputtext, Whitelist.simpleText());
             String safeUserText = Jsoup.clean(interactionvalue, Whitelist.simpleText());
             String emotion = record.get("outputmetadata");
             Metadata metadata = new Metadata(emotion);
             LinkedList<MetaDataObject> metaDataObjects = metadata.parse();
+            
             row.setMetadataObjects(metaDataObjects);
             row.setSession_id(session_id);
             row.setUserQuestion(safeUserText);
             row.setSystemResponse(safeOutputText);
+            row.setInteractiontype(interactionstype);
             return this;
         }
     }
